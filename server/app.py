@@ -66,5 +66,22 @@ def delete_pet(pet_id):
     return jsonify({'message': f'Pet {pet_id} deleted'}), 200
 
 
+@app.route('/')
+def home():
+    return jsonify({
+        'message': 'Welcome to the Pet API',
+        'endpoints': {
+            'GET /pets': 'List all pets',
+            'GET /pets/<pet_id>': 'Get a pet by ID',
+            'POST /pets': 'Create a new pet',
+            'PUT /pets/<pet_id>': 'Update a pet by ID',
+            'DELETE /pets/<pet_id>': 'Delete a pet by ID'
+        }
+    }), 200
+
+@app.errorhandler(404)
+def not_found(error):
+    return jsonify({'error': 'Resource not found', 'message': str(error)}), 404
+
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
